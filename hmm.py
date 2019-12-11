@@ -113,8 +113,6 @@ def backward(X,A,E):
     for k in allStates:
         B[k][-2] = A[k]['E']
 
-    print(B)
-
     #####################
     # START CODING HERE #
     #####################
