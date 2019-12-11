@@ -85,7 +85,6 @@ def forward(X,A,E):
             terms = [F[k][i] * A[k][l] for k in allStates]
             F[l][i+1] = sum(terms) * E[l][s]
 
-    print(F)
     # Last columns
     # for ...:
     #     F['E'][-1] += ...
@@ -114,6 +113,8 @@ def backward(X,A,E):
     for k in allStates:
         B[k][-2] = A[k]['E']
 
+    print(B)
+
     #####################
     # START CODING HERE #
     #####################
@@ -121,6 +122,9 @@ def backward(X,A,E):
     # for i in range(L-3,-1,-1):
     #     s = seq[i]
     #     ...
+    for i in range(L-3, -1, -1):
+        s = X[i]
+
 
     #####################
     #  END CODING HERE  #
