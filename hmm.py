@@ -83,6 +83,7 @@ def forward(X,A,E):
     for i,s in enumerate(X):
         for l in emittingStates:
             terms = [F[k][i] * A[k][l] for k in allStates]
+            print(terms)
             F[l][i+1] = sum(terms) * E[l][s]
 
     # Last columns
@@ -122,7 +123,9 @@ def backward(X,A,E):
     #     ...
     for i in range(L-3, -1, -1):
         s = X[i]
-
+        for k in allStates:
+            terms = [A[k][l]*E[l][s]*B[l][i+1] for l in emittingStates]
+            B[k][i] =  sum(terms)
 
     #####################
     #  END CODING HERE  #
