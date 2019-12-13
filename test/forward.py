@@ -27,7 +27,7 @@ def forward(X,A,E):
     # for ...:
     #     F['E'][-1] += ...
     for k in allStates:
-        F['E'][-1] += F[k][i+1] * A[k]['E']4
+        F['E'][-1] += F[k][i+1] * A[k]['E']
 
     #####################
     #  END CODING HERE  #

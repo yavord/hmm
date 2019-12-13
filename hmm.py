@@ -166,10 +166,15 @@ def baumwelch(set_X,A,E):
         # Inside the for loop: Expectation
         # Count how often you observe each transition and emission.
         # Add the counts to your posterior matrices.
-        # Remember to normalize to the sequence's probability P!
-
-        for i,s in enumerate(X):
-            
+        # Remember to normalize to the sequence's probability P,!
+        for i in range(len(X)-1):
+            for l in emittingStates:
+                for k in allStates:
+                    contributionA = [(F[k][i] * A[k][l] * E[l][X[i+1]] * B[l][i+1])/P for k in allStates]
+                    contributionE = [(F[k][i] * B[k][i])/P for k in allStates]
+                    A[k][l] += sum(contributionA)
+                    E[k][X[i]] += sum(contributionE)
+                
 
     # Outside the for loop: Maximization
     # Normalize row sums to 1 (except for one row in the Transition matrix!)
