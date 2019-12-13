@@ -83,7 +83,6 @@ def forward(X,A,E):
     for i,s in enumerate(X):
         for l in emittingStates:
             terms = [F[k][i] * A[k][l] for k in allStates]
-            print(terms)
             F[l][i+1] = sum(terms) * E[l][s]
 
     # Last columns
@@ -159,7 +158,7 @@ def baumwelch(set_X,A,E):
         P,F = forward(X,A,E)  # Save both the forward probability and the forward trellis
         _,B = backward(X,A,E) # Forward P == Backward P, so only save the backward trellis
         SLL += log10(P)
-
+        
         #####################
         # START CODING HERE #
         #####################
@@ -168,7 +167,10 @@ def baumwelch(set_X,A,E):
         # Count how often you observe each transition and emission.
         # Add the counts to your posterior matrices.
         # Remember to normalize to the sequence's probability P!
-        
+
+        for i,s in enumerate(X):
+            
+
     # Outside the for loop: Maximization
     # Normalize row sums to 1 (except for one row in the Transition matrix!)
     # new_A = ...
