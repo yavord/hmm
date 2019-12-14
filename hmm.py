@@ -158,6 +158,7 @@ def baumwelch(set_X,A,E):
         P,F = forward(X,A,E)  # Save both the forward probability and the forward trellis
         _,B = backward(X,A,E) # Forward P == Backward P, so only save the backward trellis
         SLL += log10(P)
+        test = []
         
         #####################
         # START CODING HERE #
@@ -169,12 +170,20 @@ def baumwelch(set_X,A,E):
         # Remember to normalize to the sequence's probability P,!
         for i in range(len(X)-1):
             for l in emittingStates:
+                # contributionA = [(F[k][i] * A[k][l] * E[l][X[i+1]] * B[l][i+1])/P for k in allStates]
+                # contributionE = [(F[k][i] * B[k][i])/P for k in allStates]
+                # new_A[k][l] += sum(contributionA)
+                # new_E[k][X[i]] += sum(contributionE)
+                # print(contributionA)
+
                 for k in allStates:
-                    contributionA = [(F[k][i] * A[k][l] * E[l][X[i+1]] * B[l][i+1])/P for k in allStates]
-                    contributionE = [(F[k][i] * B[k][i])/P for k in allStates]
-                    A[k][l] += sum(contributionA)
-                    E[k][X[i]] += sum(contributionE)
-                
+                    contributionA = (F[k][i] * A[k][l] * E[l][X[i+1]] * B[l][i+1])/P
+                    contributionE = (F[k][i] * B[k][i])/P
+                    test.append(contributionA)
+
+        print(test)
+        
+
 
     # Outside the for loop: Maximization
     # Normalize row sums to 1 (except for one row in the Transition matrix!)
