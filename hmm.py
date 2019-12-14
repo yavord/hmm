@@ -185,19 +185,36 @@ def baumwelch(set_X,A,E):
     # Normalize row sums to 1 (except for one row in the Transition matrix!)
     n_A = {}
     for k in A:
-        new_A[k] = {l:0 for l in A[k]}
+        n_A[k] = {l:0 for l in A[k]}
 
     n_E = {}
     for k in E:
-        new_E[k] = {s:0 for s in E[k]}
+        n_E[k] = {s:0 for s in E[k]}
 
     for k in allStates:
-        total = [new_A[k][l] for l in allStates]
-        
-    
+        total = 0
+        for l in allStates:
+            total += new_A[k][l]
+        for l in allStates:
+            if total == 0:
+                n_A[k][l] = 0
+            else:
+                n_A[k][l] = new_A[k][l]/total
+
+    for k in emittingStates:
+        total = 0
+        for l in emittingValues:
+            total += new_E[k][l]
+        for l in emittingValues:
+            if total == 0:
+                n_E[k][l] = 0
+            else:
+                n_E[k][l] = new_E[k][l]/total
+
     # new_A = ...
     # new_E = ...
-    
+    new_A = n_A
+    new_E = n_E
 
     #####################
     #  END CODING HERE  #
