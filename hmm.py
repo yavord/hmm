@@ -183,8 +183,21 @@ def baumwelch(set_X,A,E):
                             
     # Outside the for loop: Maximization
     # Normalize row sums to 1 (except for one row in the Transition matrix!)
+    n_A = {}
+    for k in A:
+        new_A[k] = {l:0 for l in A[k]}
+
+    n_E = {}
+    for k in E:
+        new_E[k] = {s:0 for s in E[k]}
+
+    for k in allStates:
+        total = [new_A[k][l] for l in allStates]
+        
+    
     # new_A = ...
     # new_E = ...
+    
 
     #####################
     #  END CODING HERE  #
