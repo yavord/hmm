@@ -143,7 +143,7 @@ def baumwelch(set_X,A,E):
     allStates = A.keys()
     emittingStates = E.keys()
     emittingValues = E['L'].keys()
-    
+
     # Initialize a new (posterior) Transition and Emission matrix
     new_A = {}
     for k in A:
@@ -180,6 +180,9 @@ def baumwelch(set_X,A,E):
                     if s == X[i]:
                         contributionE = (F[k][i] * B[k][i])/P
                         new_E[k][s] += contributionE
+
+        for k in allStates:
+            new_A[k]['E'] += A[k]['E']
                             
     # Outside the for loop: Maximization
     # Normalize row sums to 1 (except for one row in the Transition matrix!)
