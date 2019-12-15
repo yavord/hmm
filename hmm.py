@@ -182,8 +182,8 @@ def baumwelch(set_X,A,E):
                         new_E[k][s] += contributionE
 
         for k in allStates:
-            new_A[k]['E'] += A[k]['E']
-                            
+            new_A[k]['E'] += (F[k][-1] * A[k]['E'])/P
+        
     # Outside the for loop: Maximization
     # Normalize row sums to 1 (except for one row in the Transition matrix!)
     n_A = {}
