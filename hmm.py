@@ -313,8 +313,7 @@ def main(args = False):
             if verbosity >= 2: print_params(A,E)
 
         converged = current_SLL - last_SLL <= threshold
-        final_SLL = sum([log10(forward(X,A,E)[0]) for X in set_X])
-
+        final_SLL = sum([log10(forward(X,A,E)[0]) if forward(X,A,E)[0] > 0 else 0 for X in set_X])
         # Save and/or print relevant output
         save('SLL','%1.2e\t%i\t%s' % (final_SLL, i, converged))
         save('posterior_A',serialize(A))
