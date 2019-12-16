@@ -1,13 +1,5 @@
 from argparse import ArgumentParser, RawTextHelpFormatter
 
-
-#########################
-### UTILITY FUNCTIONS ###
-#########################
-# A lot of these are used by hmm.main();
-# skim these to understand what's going on,
-# but don't code in this file!
-
 def parse_args():
     "Parses inputs from commandline and returns them as a Namespace object."
 
@@ -111,7 +103,3 @@ def sort_states(states):
     Q.remove('B')
     Q.remove('E')
     return ['B'] + Q + ['E']
-
-################################
-### END OF UTILITY FUNCTIONS ###
-################################

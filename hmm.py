@@ -1,15 +1,5 @@
 #!/usr/bin/python3
 
-"""
-DESCRIPTION:
-    Template code for the Hidden Markov Models assignment in the Algorithms in Sequence Analysis course at the VU.
-
-INSTRUCTIONS:
-    Complete the code (compatible with Python 3!) upload to CodeGrade via corresponding Canvas assignment.
-
-AUTHOR:
-    Yavor Dimitrov 2626236
-"""
 
 import os.path as op
 
@@ -72,28 +62,13 @@ def forward(X,A,E):
     F = {k:[0] * L for k in allStates}
     F['B'][0] = 1
 
-    #####################
-    # START CODING HERE #
-    #####################
-    # HINT: The Viterbi and Forward algorithm are very similar! 
-    # Adapt the viterbi() function to account for the differences.
-
-    # Middle columns
-    # for ...
     for i,s in enumerate(X):
         for l in emittingStates:
             terms = [F[k][i] * A[k][l] for k in allStates]
             F[l][i+1] = sum(terms) * E[l][s]
 
-    # Last columns
-    # for ...:
-    #     F['E'][-1] += ...
     for k in allStates:
         F['E'][-1] += F[k][i+1] * A[k]['E'] 
-
-    #####################
-    #  END CODING HERE  #
-    #####################
 
     P = F['E'][-1] # The Forward probability: P(X|A,E)
     return(P,F)
@@ -113,22 +88,11 @@ def backward(X,A,E):
     for k in allStates:
         B[k][-2] = A[k]['E']
 
-    #####################
-    # START CODING HERE #
-    #####################
-    # Remaining columns
-    # for i in range(L-3,-1,-1):
-    #     s = seq[i]
-    #     ...
     for i in range(L-3, -1, -1):
         s = X[i]
         for k in allStates:
             terms = [A[k][l]*E[l][s]*B[l][i+1] for l in emittingStates]
             B[k][i] =  sum(terms)
-
-    #####################
-    #  END CODING HERE  #
-    #####################
 
     P = B['B'][0] # The Backward probability -- should be identical to Forward!
     return(P,B)
@@ -160,14 +124,6 @@ def baumwelch(set_X,A,E):
         _,B = backward(X,A,E) # Forward P == Backward P, so only save the backward trellis
         SLL += log10(P)
         
-        #####################
-        # START CODING HERE #
-        #####################
-
-        # Inside the for loop: Expectation
-        # Count how often you observe each transition and emission.
-        # Add the counts to your posterior matrices.
-        # Remember to normalize to the sequence's probability P,!
         for k in allStates:
             for l in emittingStates:
                 for i in range(len(X)-1):
@@ -184,8 +140,6 @@ def baumwelch(set_X,A,E):
         for k in allStates:
             new_A[k]['E'] += (F[k][len(X)]*A[k]['E'])/P
 
-    # Outside the for loop: Maximization
-    # Normalize row sums to 1 (except for one row in the Transition matrix!)
     n_A = {}
     for k in A:
         n_A[k] = {l:0 for l in A[k]}
@@ -214,8 +168,6 @@ def baumwelch(set_X,A,E):
             else:
                 n_E[k][l] = new_E[k][l]/total
 
-    # new_A = ...
-    # new_E = ...
     new_A = n_A
     new_E = n_E
 
